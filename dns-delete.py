@@ -9,20 +9,18 @@ headers = {'X-Auth-Email': email, 'X-Auth-Key': api_key}
 
 
 def get_zone_id(domain):
-    gz = requests.get('https://api.cloudflare.com/client/v4/zones?name='
-                       + domain, headers=headers).json()
+    gz = requests.get('https://api.cloudflare.com/client/v4/zones?name='+ domain, headers=headers).json()
     return gz['result'][0]['id']
 
 
-domain = input('domain : ')
+domain = input('domain: ')
 zone_id = get_zone_id(domain)
-dns_url = 'https://api.cloudflare.com/client/v4/zones/' + zone_id \
-    + '/dns_records/'
+dns_url = 'https://api.cloudflare.com/client/v4/zones/' + zone_id + '/dns_records/'
 
 
 def delete(_id):
     delete_id = requests.delete(dns_url + _id, headers=headers)
-    return delete_id.text
+    print(delete_id.text)
 
 
 request = requests.get(dns_url, headers=headers).json()
